@@ -1,4 +1,4 @@
-package com.sbrf.reboot;
+package com.sbrf.reboot.calculator;
 
 public class Calculator {
     public static double getAddition(double a, double b) {
@@ -25,5 +25,7 @@ public class Calculator {
         return Math.max(a, b);
     }
 
-
+    public static long getAbs(long a) {
+        return (a < 0) ? -a : a;
+    }
 }
