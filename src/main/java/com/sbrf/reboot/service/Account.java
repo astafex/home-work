@@ -1,6 +1,9 @@
 package com.sbrf.reboot.service;
 
- public class Account {
+import lombok.Getter;
+
+public class Account {
+    @Getter
     private long clientId;
     private String book;
 
