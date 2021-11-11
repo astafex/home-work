@@ -1,4 +1,4 @@
-package com.sbrf.reboot;
+package com.sbrf.reboot.service;
 
 import java.util.Set;
 
