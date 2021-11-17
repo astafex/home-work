@@ -1,12 +1,13 @@
 package com.sbrf.reboot.service;
 
 import com.sbrf.reboot.dto.Account;
+import com.sbrf.reboot.repository.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +19,6 @@ class AccountServiceTest {
 
     @Mock
     AccountRepository accountRepository;
-
     AccountService accountService;
 
     @BeforeEach
@@ -28,7 +28,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void bookExist() throws FileNotFoundException {
+    void bookExist() throws IOException {
         Account account = new Account("ACC1234NUM");
         Set<Account> accounts = new HashSet<>();
         accounts.add(account);
@@ -38,7 +38,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void bookNotExist() throws FileNotFoundException {
+    void bookNotExist() throws IOException {
         Set<Account> accounts = new HashSet<>();
         accounts.add(new Account("ACC1234NUM"));
 

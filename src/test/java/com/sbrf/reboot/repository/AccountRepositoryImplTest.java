@@ -1,11 +1,11 @@
 package com.sbrf.reboot.repository;
 
 import com.sbrf.reboot.dto.Account;
-import com.sbrf.reboot.service.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -16,7 +16,7 @@ class AccountRepositoryImplTest {
     Set<Account> allAccountsByClientId;
 
     @BeforeEach
-    void setUp() throws FileNotFoundException {
+    void setUp() throws IOException {
         accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
         allAccountsByClientId = accountRepository.getAllAccountsByClientId(1);
     }
@@ -45,5 +45,9 @@ class AccountRepositoryImplTest {
         });
     }
 
-
+    @Test
+    void successUpdateNumberByClientId() throws IOException {
+        AccountRepositoryImpl repository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
+        assertTrue(repository.updateClientNumber(1, "1-ACCNUM", "X-XXXXXXX"));
+    }
 }
