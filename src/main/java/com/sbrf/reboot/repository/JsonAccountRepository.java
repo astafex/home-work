@@ -10,12 +10,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
-public class AccountRepositoryImpl implements AccountRepository {
+public class JsonAccountRepository implements AccountRepository {
     private final String pathToFile;
 
     private static final String CLIENT_GROUP = "clientId";
     private static final String NUMBER_GROUP = "number";
     private static final String REGEX = "\\s*\\{\\s*\"clientId\": (?<" + CLIENT_GROUP + ">\\d+),\\s*\"number\": \"(?<" + NUMBER_GROUP + ">\\S+)\"\\s*}";
+
+    private static final Pattern PATTERN = Pattern.compile(REGEX);
+
 
     /**
      * Метод позволяет получить набор объектов Account с номерами счетов по конткретному индентификатору клиента
@@ -41,8 +44,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     public boolean updateClientNumber(long clientId, String currentNumber, String updateNumber) throws IOException {
         String fileContents = readFile();
         StringBuilder sb = new StringBuilder(fileContents);
-        Pattern pattern = Pattern.compile(REGEX);
-        Matcher matcher = pattern.matcher(fileContents);
+        Matcher matcher = PATTERN.matcher(fileContents);
         while (matcher.find()) {
             // производится замена при совпадении входных 'clientId' и 'currentNumber'
             if (matcher.group(CLIENT_GROUP).equals(Long.toString(clientId)) && matcher.group(NUMBER_GROUP).equals(currentNumber)) {
@@ -66,8 +68,7 @@ public class AccountRepositoryImpl implements AccountRepository {
      */
     private Set<Account> parseJsonFile(String fileContents, long clientId) {
         Set<Account> accounts = new HashSet<>();
-        Pattern pattern = Pattern.compile(REGEX);
-        Matcher matcher = pattern.matcher(fileContents);
+        Matcher matcher = PATTERN.matcher(fileContents);
         while (matcher.find()) {
             long id;
             String number;

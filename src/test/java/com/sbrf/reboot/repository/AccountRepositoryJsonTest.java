@@ -11,13 +11,13 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AccountRepositoryImplTest {
+class AccountRepositoryJsonTest {
     AccountRepository accountRepository;
     Set<Account> allAccountsByClientId;
 
     @BeforeEach
     void setUp() throws IOException {
-        accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
+        accountRepository = new JsonAccountRepository("src/main/resources/Accounts.txt");
         allAccountsByClientId = accountRepository.getAllAccountsByClientId(1);
     }
 
@@ -39,7 +39,7 @@ class AccountRepositoryImplTest {
 
     @Test
     void failGetAllAccountsByClientId() {
-        accountRepository = new AccountRepositoryImpl("somePath");
+        accountRepository = new JsonAccountRepository("somePath");
         assertThrows(FileNotFoundException.class, () -> {
             accountRepository.getAllAccountsByClientId(1L);
         });
@@ -47,7 +47,7 @@ class AccountRepositoryImplTest {
 
     @Test
     void successUpdateNumberByClientId() throws IOException {
-        AccountRepositoryImpl repository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
+        JsonAccountRepository repository = new JsonAccountRepository("src/main/resources/Accounts.txt");
         assertTrue(repository.updateClientNumber(1, "1-ACCNUM", "X-XXXXXXX"));
     }
 }
