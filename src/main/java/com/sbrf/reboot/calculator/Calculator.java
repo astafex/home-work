@@ -1,4 +1,4 @@
-package com.sbrf.reboot;
+package com.sbrf.reboot.calculator;
 
 public class Calculator {
     public static long getAddition(long a, long b) {
