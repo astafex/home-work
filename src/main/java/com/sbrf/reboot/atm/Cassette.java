@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Представляет сущность кассеты с банкнотами
  *
- * @param <T> Может содержать банкноты разного номинала
+ * @param <T> Может содержать банкноты одного номинала
  */
 @AllArgsConstructor
 public class Cassette<T extends Banknote> {
