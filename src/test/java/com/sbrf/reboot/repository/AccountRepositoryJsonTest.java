@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,11 +24,8 @@ class AccountRepositoryJsonTest {
 
     @Test
     void onlyPersonalAccounts() {
-        ArrayList<String> strings = new ArrayList<String>() {{
-            add("2-ACCNUM");
-            add("1-ACCNUM");
-            add("4-ACC1NUM");
-        }};
+        ArrayList<String> strings = new ArrayList<String>();
+        Collections.addAll(strings, "2-ACCNUM", "1-ACCNUM", "4-ACC1NUM");
 
         allAccountsByClientId.forEach(e -> assertTrue(strings.contains(e.getNumber())));
     }
