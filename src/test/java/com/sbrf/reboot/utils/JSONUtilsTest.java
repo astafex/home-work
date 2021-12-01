@@ -31,8 +31,8 @@ class JSONUtilsTest {
 
     @Test
     void JSONtoResponse() throws JsonProcessingException {
-        Response request = JSONUtils.JSONtoResponse("{\"statusCode\":\"SUCCESS\"}");
-        Assertions.assertEquals("SUCCESS", request.getStatusCode());
+        Response response = JSONUtils.JSONtoResponse("{\"statusCode\":\"SUCCESS\"}");
+        Assertions.assertEquals("SUCCESS", response.getStatusCode());
     }
 
 }

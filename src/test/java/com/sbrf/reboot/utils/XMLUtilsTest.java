@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class XMLUtilsTest {
-
     @SneakyThrows
     @Test
     void toXMLRequest() {
@@ -31,8 +30,8 @@ class XMLUtilsTest {
 
     @Test
     void XMLtoResponse() throws JsonProcessingException {
-        Response request = XMLUtils.XMLtoResponse("<Response><statusCode>SUCCESS</statusCode></Response>");
-        Assertions.assertEquals("SUCCESS", request.getStatusCode());
+        Response response = XMLUtils.XMLtoResponse("<Response><statusCode>SUCCESS</statusCode></Response>");
+        Assertions.assertEquals("SUCCESS", response.getStatusCode());
     }
 
 }
