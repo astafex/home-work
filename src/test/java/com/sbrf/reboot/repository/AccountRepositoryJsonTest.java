@@ -24,7 +24,7 @@ class AccountRepositoryJsonTest {
 
     @Test
     void onlyPersonalAccounts() {
-        ArrayList<String> strings = new ArrayList<String>();
+        ArrayList<String> strings = new ArrayList<>();
         Collections.addAll(strings, "2-ACCNUM", "1-ACCNUM", "4-ACC1NUM");
 
         allAccountsByClientId.forEach(e -> assertTrue(strings.contains(e.getNumber())));
