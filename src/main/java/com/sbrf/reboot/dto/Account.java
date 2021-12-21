@@ -14,7 +14,7 @@ public class Account {
     /**
      * Уникальный идентификатор клиента
      */
-    @Setter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.NONE)
     private long clientId;
     /**
      * Номер счета клиента
@@ -27,7 +27,7 @@ public class Account {
     /**
      * Дата создания счета
      */
-    @Setter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.NONE)
     private LocalDate createDate = LocalDate.now();
 
     public Account(String number) {
