@@ -6,12 +6,14 @@ import com.sbrf.reboot.dto.NAccount;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -47,13 +49,13 @@ class MainReportTest {
     @Test
     @SneakyThrows
     void getTotalsWithCompletableFuture() {
-        BigDecimal sum = MainReport.getTotalsWithCompletableFuture(customers.stream());
-        assertEquals(new BigDecimal(4), sum);
+        CompletableFuture<BigDecimal> cfSum = MainReport.getTotalsWithCompletableFuture(customers.stream());
+        assertEquals(new BigDecimal(4), cfSum.get());
     }
 
     @Test
     void getTotalsWithReact() {
-        BigDecimal sum = MainReport.getTotalsWithReact(customers.stream());
-        assertEquals(new BigDecimal(4), sum);
+        Flux<BigDecimal> fluxSum = MainReport.getTotalsWithReact(customers.stream());
+        assertEquals(new BigDecimal(4), fluxSum.toStream().reduce(BigDecimal::add).orElse(BigDecimal.ZERO));
     }
 }

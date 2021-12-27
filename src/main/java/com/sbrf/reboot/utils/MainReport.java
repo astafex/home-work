@@ -34,9 +34,10 @@ public class MainReport {
      * @throws ExecutionException   при возникновении исключений в потоке. Выборошенное исключение в потоке можно получить с помощью {@link ExecutionException#getCause()}
      * @throws InterruptedException при любых прерываниях потока
      */
-    public static BigDecimal getTotalsWithCompletableFuture(Stream<Customer> streamCustomers) throws ExecutionException, InterruptedException {
+    public static CompletableFuture<BigDecimal> getTotalsWithCompletableFuture(Stream<Customer> streamCustomers) {
         ExecutorService executorService = Executors.newWorkStealingPool();
-        CompletableFuture<BigDecimal> future = CompletableFuture.supplyAsync(() -> streamCustomers
+
+        return CompletableFuture.supplyAsync(() -> streamCustomers
                 .filter(FILTER_BY_AGE)
                 .flatMap(customer -> customer.getNAccounts()
                         .filter(FILTER_BY_CREATE_DATE)
@@ -44,8 +45,6 @@ public class MainReport {
                         .map(NAccount::getBalance))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO), executorService);
-
-        return future.get();
     }
 
 
@@ -59,8 +58,9 @@ public class MainReport {
      * @param streamCustomers поток клиентов, Customer
      * @return сумма рублевых балансов клиентов в формате BigDecimal
      */
-    public static BigDecimal getTotalsWithReact(Stream<Customer> streamCustomers) {
-        Flux<BigDecimal> bigDecimalFlux = Flux
+    public static Flux<BigDecimal> getTotalsWithReact(Stream<Customer> streamCustomers) {
+
+        return Flux
                 .fromStream(streamCustomers)
                 .publishOn(Schedulers.parallel())
                 .filter(FILTER_BY_AGE)
@@ -69,11 +69,6 @@ public class MainReport {
                         .filter(FILTER_BY_CREATE_DATE)
                         .filter(FILTER_BY_CURRENCY)
                         .map(NAccount::getBalance));
-
-        return bigDecimalFlux
-                .toStream()
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
     }
 }
 
