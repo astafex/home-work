@@ -4,6 +4,7 @@ import com.sbrf.reboot.dto.Currency;
 import com.sbrf.reboot.dto.Customer;
 import com.sbrf.reboot.dto.NAccount;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.math.BigDecimal;
@@ -31,8 +32,6 @@ public class MainReport {
      *
      * @param streamCustomers поток клиентов, Customer
      * @return сумма рублевых балансов клиентов в формате BigDecimal
-     * @throws ExecutionException   при возникновении исключений в потоке. Выборошенное исключение в потоке можно получить с помощью {@link ExecutionException#getCause()}
-     * @throws InterruptedException при любых прерываниях потока
      */
     public static CompletableFuture<BigDecimal> getTotalsWithCompletableFuture(Stream<Customer> streamCustomers) {
         ExecutorService executorService = Executors.newWorkStealingPool();
@@ -58,7 +57,7 @@ public class MainReport {
      * @param streamCustomers поток клиентов, Customer
      * @return сумма рублевых балансов клиентов в формате BigDecimal
      */
-    public static Flux<BigDecimal> getTotalsWithReact(Stream<Customer> streamCustomers) {
+    public static Mono<BigDecimal> getTotalsWithReact(Stream<Customer> streamCustomers) {
 
         return Flux
                 .fromStream(streamCustomers)
@@ -68,7 +67,8 @@ public class MainReport {
                         .fromStream(customer.getNAccounts())
                         .filter(FILTER_BY_CREATE_DATE)
                         .filter(FILTER_BY_CURRENCY)
-                        .map(NAccount::getBalance));
+                        .map(NAccount::getBalance))
+                .reduce(BigDecimal::add);
     }
 }
 
