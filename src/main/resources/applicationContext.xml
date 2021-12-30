@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="java.time.LocalDate" value="com.sbrf.reboot.config.CustomLocalDateEditor"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="beanNAccountFromXml1" class="com.sbrf.reboot.dto.NAccount">
+        <constructor-arg name="balance" value="123"/>
+        <constructor-arg name="currency" value="RUB"/>
+        <constructor-arg name="createDate" value="2021-12-29"/>
+    </bean>
+
+    <bean id="beanNAccountFromXml2" class="com.sbrf.reboot.dto.NAccount">
+        <constructor-arg name="balance" value="456"/>
+        <constructor-arg name="currency" value="USD"/>
+        <constructor-arg name="createDate" value="2022-01-10"/>
+    </bean>
+
+    <bean id="beanCustomerFromXml" class="com.sbrf.reboot.dto.Customer">
+        <constructor-arg name="age" value="18"/>
+        <constructor-arg name="name" value="Artem"/>
+        <constructor-arg name="nAccounts">
+            <set>
+                <ref bean="beanNAccountFromXml1"/>
+                <ref bean="beanNAccountFromXml2"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+</beans>
