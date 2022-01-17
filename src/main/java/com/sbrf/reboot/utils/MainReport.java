@@ -2,7 +2,7 @@ package com.sbrf.reboot.utils;
 
 import com.sbrf.reboot.dto.Currency;
 import com.sbrf.reboot.dto.Customer;
-import com.sbrf.reboot.dto.NAccount;
+import com.sbrf.reboot.dto.Account;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -18,9 +18,9 @@ import java.util.stream.Stream;
 public class MainReport {
 
     private final static Predicate<Customer> FILTER_BY_AGE = (customer) -> customer.getAge() >= 18 && customer.getAge() <= 30;
-    private final static Predicate<NAccount> FILTER_BY_CREATE_DATE = (nAccount) -> nAccount.getCreateDate().isAfter(LocalDate.of(2021, 7, 1))
-            && nAccount.getCreateDate().isBefore(LocalDate.of(2021, 8, 1));
-    private final static Predicate<NAccount> FILTER_BY_CURRENCY = (nAccount) -> nAccount.getCurrency().equals(Currency.RUB);
+    private final static Predicate<Account> FILTER_BY_CREATE_DATE = (account) -> account.getCreateDate().isAfter(LocalDate.of(2021, 7, 1))
+            && account.getCreateDate().isBefore(LocalDate.of(2021, 8, 1));
+    private final static Predicate<Account> FILTER_BY_CURRENCY = (account) -> account.getCurrency().equals(Currency.RUB);
 
     /**
      * Метод возвращает сумму остатков на счетах всех клиентов, c использованием {@link CompletableFuture}.
@@ -37,10 +37,10 @@ public class MainReport {
 
         return CompletableFuture.supplyAsync(() -> streamCustomers
                 .filter(FILTER_BY_AGE)
-                .flatMap(customer -> customer.getNAccounts()
+                .flatMap(customer -> customer.getAccounts()
                         .filter(FILTER_BY_CREATE_DATE)
                         .filter(FILTER_BY_CURRENCY)
-                        .map(NAccount::getBalance))
+                        .map(Account::getBalance))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO), executorService);
     }
@@ -63,10 +63,10 @@ public class MainReport {
                 .publishOn(Schedulers.parallel())
                 .filter(FILTER_BY_AGE)
                 .flatMap(customer -> Flux
-                        .fromStream(customer.getNAccounts())
+                        .fromStream(customer.getAccounts())
                         .filter(FILTER_BY_CREATE_DATE)
                         .filter(FILTER_BY_CURRENCY)
-                        .map(NAccount::getBalance))
+                        .map(Account::getBalance))
                 .reduce(BigDecimal::add);
     }
 }

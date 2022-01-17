@@ -22,9 +22,9 @@ public class Customer {
      * Счета клиента
      */
     @Getter(AccessLevel.NONE)
-    private Set<NAccount> nAccounts;
+    private Set<Account> accounts;
 
-    public Stream<NAccount> getNAccounts() {
-        return nAccounts.stream();
+    public Stream<Account> getAccounts() {
+        return accounts.stream();
     }
 }
