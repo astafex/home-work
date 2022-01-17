@@ -1,46 +1,29 @@
 package com.sbrf.reboot.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@EqualsAndHashCode
-@Builder
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 public class Account {
     /**
-     * Уникальный идентификатор клиента
-     */
-    @Setter(AccessLevel.NONE)
-    private long clientId;
-    /**
-     * Номер счета клиента
-     */
-    private String number;
-    /**
-     * Остаток на счете
+     * Баланс счета
      */
     private BigDecimal balance;
     /**
+     * Вид валюты
+     */
+    private Currency currency;
+    /**
      * Дата создания счета
      */
-    @Setter(AccessLevel.NONE)
-    private LocalDate createDate = LocalDate.now();
-
-    public Account(String number) {
-        this.number = number;
-    }
-
-    public Account(long clientId, String number) {
-        this.clientId = clientId;
-        this.number = number;
-    }
+    private LocalDate createDate;
 }
-
-
-
-
 
