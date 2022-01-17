@@ -17,7 +17,7 @@ public class HelloServlet extends HttpServlet {
      *
      * @param req  информация передаваемая от клиента - серверу
      * @param resp ответ передаваемый от сервера - клиенту
-     * @throws IOException
+     * @throws IOException если произошло исключение ввода/вывода
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
