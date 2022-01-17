@@ -13,13 +13,13 @@
         </property>
     </bean>
 
-    <bean id="beanNAccountFromXml1" class="com.sbrf.reboot.dto.NAccount">
+    <bean id="beanAccountFromXml1" class="com.sbrf.reboot.dto.Account">
         <constructor-arg name="balance" value="123"/>
         <constructor-arg name="currency" value="RUB"/>
         <constructor-arg name="createDate" value="2021-12-29"/>
     </bean>
 
-    <bean id="beanNAccountFromXml2" class="com.sbrf.reboot.dto.NAccount">
+    <bean id="beanAccountFromXml2" class="com.sbrf.reboot.dto.Account">
         <constructor-arg name="balance" value="456"/>
         <constructor-arg name="currency" value="USD"/>
         <constructor-arg name="createDate" value="2022-01-10"/>
@@ -28,10 +28,10 @@
     <bean id="beanCustomerFromXml" class="com.sbrf.reboot.dto.Customer">
         <constructor-arg name="age" value="18"/>
         <constructor-arg name="name" value="Artem"/>
-        <constructor-arg name="nAccounts">
+        <constructor-arg name="accounts">
             <set>
-                <ref bean="beanNAccountFromXml1"/>
-                <ref bean="beanNAccountFromXml2"/>
+                <ref bean="beanAccountFromXml1"/>
+                <ref bean="beanAccountFromXml2"/>
             </set>
         </constructor-arg>
     </bean>

@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -27,15 +26,15 @@ public class Customer {
      * Счета клиента
      */
     @Getter(AccessLevel.NONE)
-    private Set<NAccount> nAccounts;
+    private Set<Account> accounts;
 
-    public Stream<NAccount> getNAccounts() {
-        return nAccounts.stream();
+    public Stream<Account> getAccounts() {
+        return accounts.stream();
     }
 
-    public Customer(int age, String name, Set<NAccount> nAccounts) {
+    public Customer(int age, String name, Set<Account> accounts) {
         this.age = age;
         this.name = name;
-        this.nAccounts = nAccounts;
+        this.accounts = accounts;
     }
 }

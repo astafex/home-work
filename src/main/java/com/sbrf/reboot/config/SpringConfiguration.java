@@ -1,7 +1,7 @@
 package com.sbrf.reboot.config;
 
 import com.sbrf.reboot.dto.Currency;
-import com.sbrf.reboot.dto.NAccount;
+import com.sbrf.reboot.dto.Account;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @Configuration
 @ComponentScan("com.sbrf.reboot.dto")
-public class AppConfiguration {
+public class SpringConfiguration {
     static void main(String[] args) {
     }
 
@@ -28,9 +28,9 @@ public class AppConfiguration {
         return "Anakin";
     }
 
-    @Bean("beanNAccountFromAnnotation")
-    public static NAccount getBeenNAccount() {
-        return new NAccount(BigDecimal.TEN, Currency.EUR, LocalDate.of(2021, 12, 1));
+    @Bean("beanAccountFromAnnotation")
+    public static Account getBeenAccount() {
+        return new Account(BigDecimal.TEN, Currency.EUR, LocalDate.of(2021, 12, 1));
     }
 
     public static ApplicationContext getAppContextFromXml() {
@@ -38,6 +38,6 @@ public class AppConfiguration {
     }
 
     public static ApplicationContext getAppContextFromAnnotation() {
-        return new AnnotationConfigApplicationContext(AppConfiguration.class);
+        return new AnnotationConfigApplicationContext(SpringConfiguration.class);
     }
 }
