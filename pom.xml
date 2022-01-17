@@ -33,7 +33,6 @@
 
         <jackson-databind.version>2.12.4</jackson-databind.version>
         <jackson-dataformat-xml.version>2.11.1</jackson-dataformat-xml.version>
-        <reactor-core.version>3.3.22.RELEASE</reactor-core.version>
         <reactor-bom.version>2020.0.14</reactor-bom.version>
         <spring-framework.version>5.2.19.RELEASE</spring-framework.version>
 
@@ -78,7 +77,6 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-            <version>${reactor-core.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
