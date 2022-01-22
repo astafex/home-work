@@ -54,9 +54,9 @@ class MainReportTest {
         assertEquals(new BigDecimal(4), cfSum.get());
     }
 
-//    @Test
-//    void getTotalsWithReactTest() {
-//        Mono<BigDecimal> monoSum = MainReport.getTotalsWithReact(customers.stream());
-//        assertEquals(new BigDecimal(4), monoSum.block(Duration.ofMillis(50)));
-//    }
+    @Test
+    void getTotalsWithReactTest() {
+        Mono<BigDecimal> monoSum = MainReport.getTotalsWithReact(customers.stream());
+        assertEquals(new BigDecimal(4), monoSum.block(Duration.ofMillis(50)));
+    }
 }
