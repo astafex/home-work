@@ -5,6 +5,8 @@ import com.sbrf.reboot.dto.Currency;
 import com.sbrf.reboot.dto.Customer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -66,16 +68,20 @@ public class MainReport {
      * @return сумма рублевых балансов клиентов в формате BigDecimal
      */
     public static Mono<BigDecimal> getTotalsWithReact(Stream<Customer> streamCustomers) {
+        Scheduler scheduler = Schedulers.newParallel("parallel");
+
         Flux<Customer> customerFlux = Flux.fromStream(streamCustomers)
                 .filter(FILTER_BY_AGE);
 
-        Flux<BigDecimal> bigDecimalFlux = customerFlux.flatMap(customer -> Mono.just(customer
-                .getAccounts()
-                .filter(FILTER_BY_CREATE_DATE)
-                .filter(FILTER_BY_CURRENCY)
-                .map(Account::getBalance)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO)));
+        Flux<BigDecimal> bigDecimalFlux = customerFlux
+                .flatMap(customer -> Mono.just(customer
+                        .getAccounts()
+                        .filter(FILTER_BY_CREATE_DATE)
+                        .filter(FILTER_BY_CURRENCY)
+                        .map(Account::getBalance)
+                        .reduce(BigDecimal::add)
+                        .orElse(BigDecimal.ZERO)))
+                .subscribeOn(scheduler);
 
         return bigDecimalFlux.reduce(BigDecimal::add);
     }
